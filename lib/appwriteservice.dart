@@ -1,9 +1,8 @@
-
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 
 class AppwriteService {
-  late  Client client;
+  late Client client;
 
   late Databases databases;
 
@@ -18,48 +17,52 @@ class AppwriteService {
     client.setProject(projectId);
     databases = Databases(client);
   }
-  Future<List<Document>>getNotes() async{
-    try{
+
+  Future<List<Document>> getNotes() async {
+    try {
       final result = await databases.listDocuments(
-        collectionId:collectionId,
-        databaseId:databaseId,
+        collectionId: collectionId,
+        databaseId: databaseId,
       );
       return result.documents;
     } catch (e) {
-      print('error loading tasks:$e');
+      print('Error loading tasks: $e');
       rethrow;
     }
   }
-  Future<Document>addNote(String title,String subtitle,String category,String data)async {
+
+  Future<Document> addNote(
+      String title, String subtitle, String category, String date) async {
     try {
       final documentId = ID.unique();
 
       final result = await databases.createDocument(
-        collectionId:collectionId,
-        databaseId:databaseId,
-        data:{
-          'title':title,
-          'subtitle':subtitle,
-          'category':category,
-          'data':data,
+        collectionId: collectionId,
+        databaseId: databaseId,
+        data: {
+          'title': title,
+          'subtitle': subtitle,
+          'category': category,
+          'date': date,
         },
-        documentId:documentId
+        documentId: documentId,
       );
       return result;
-    }catch (e) {
-      print('error creating task:$e');
+    } catch (e) {
+      print('Error creating task: $e');
       rethrow;
     }
   }
-  Future<void>deleteNote(String documentId) async{
-    try{
+
+  Future<void> deleteNote(String documentId) async {
+    try {
       await databases.deleteDocument(
-        collectionId:collectionId,
-        documentId:documentId,
-        databaseId:databaseId,
+        collectionId: collectionId,
+        documentId: documentId,
+        databaseId: databaseId,
       );
     } catch (e) {
-      print('error deleting task:$e');
+      print('Error deleting task: $e');
       rethrow;
     }
   }

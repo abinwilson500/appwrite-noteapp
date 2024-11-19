@@ -18,10 +18,10 @@ class Note {
   factory Note.fromDocument(Document doc) {
     return Note(
       id: doc.$id,
-       title:doc.data['title'],
-        subtitle: doc.data['subtitle'],
-         category:doc.data ['category'],
-          date: doc.data['date'],
+      title: doc.data['title'],
+      subtitle: doc.data['subtitle'],
+      category: doc.data['category'],
+      date: doc.data['date'],
     );
   }
-  }
+}
